@@ -13,6 +13,15 @@ window.onload = function() {
   if(listItems.length > 0) {
     fillListBox();
   }
+
+  // Set up the event listener for the
+  // text input to handle the <Enter> key.
+  inputNewItem.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      document.getElementById("addItem").click();
+    }
+  });
 };
 
 function addItemClick() {
