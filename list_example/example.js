@@ -1,6 +1,6 @@
-var listItems;
-var inputNewItem;
-var ulList;
+let listItems;
+let inputNewItem;
+let ulList;
 
 window.onload = function() {
   // Load the saved list, if there is one.
