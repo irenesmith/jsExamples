@@ -1,22 +1,26 @@
-let inputNewItem;
-let ulList;
-let listItems;
+// Constant references to the list and text box
+// Although the values can't change, the value of
+// the objects' properties can.
+const itemInput = document.getElementById("newItem");
+const listCount = document.getElementById("listCount");
+const myList = document.getElementById("myList");
+
+// This is the list of strings
+let listItems = [];
 
 window.onload = function() {
   // Load the saved list, if there is one.
   listItems = loadList();
 
-  inputNewItem = document.getElementById("newItem");
-  ulList = document.getElementById("myList");
-
   // Display the existing list items.
   if(listItems.length > 0) {
-    fillListBox();
+    listCount.innerText = listItems.length.toString() + " items";
+    fillMyList();
   }
 
   // Set up the event listener for the
   // text input to handle the <Enter> key.
-  inputNewItem.addEventListener("keyup", function(event) {
+  itemInput.addEventListener("keyup", function(event) {
     event.preventDefault();
     if (event.keyCode === 13) {
       document.getElementById("addItem").click();
@@ -25,16 +29,17 @@ window.onload = function() {
 };
 
 function addItemClick() {
-  if(inputNewItem.value.length > 0) {
+  if(itemInput.value.length > 0) {
     // Add new item to listBox and array.
-    let newItem = inputNewItem.value;
+    let newItem = itemInput.value;
     insertItem(newItem);
     listItems.push(newItem);
+    listCount.innerText = listItems.length.toString() + " items";
     saveList();
 
     // Clear the text box and set focus to it
-    inputNewItem.value = '';
-    inputNewItem.focus();
+    itemInput.value = '';
+    itemInput.focus();
   }
 
 }
@@ -56,10 +61,10 @@ function loadList() {
   }
 }
 
-function fillListBox() {
+function fillMyList() {
   // Remove any existing items.
-  while(ulList.hasChildNodes()) {
-    ulList.removeChild(ulList.firstChild);
+  while(myList.hasChildNodes()) {
+    myList.removeChild(myList.firstChild);
   }
 
   for(let i = 0; i < listItems.length; i++) {
@@ -73,13 +78,13 @@ function insertItem(newItem) {
     newListItem.appendChild(document.createTextNode(newItem));
 
     // Append it to myList
-    ulList.appendChild(newListItem);
+    myList.appendChild(newListItem);
 }
 
 function storageAvailable(type) {
   try {
-      var storage = window[type],
-          x = '__storage_test__';
+      let storage = window[type],
+        x = '__storage_test__';
       storage.setItem(x, x);
       storage.removeItem(x);
       return true;
